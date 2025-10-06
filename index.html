@@ -110,8 +110,8 @@
       background: var(--card-bg);
       color: var(--text);
       border-radius: 999px;
-      padding: 0.5rem 1rem;
-      font-size: 0.95rem;
+      padding: 0.45rem 0.85rem;
+      font-size: 1.3rem;
       cursor: pointer;
       display: inline-flex;
       align-items: center;
@@ -423,8 +423,8 @@
       <h1>Французские числительные</h1>
       <p>тренажёр запоминания и распознавания 1–100</p>
     </div>
-    <button id="themeToggle" type="button" aria-pressed="false">
-      Тема
+    <button id="themeToggle" type="button" aria-pressed="false" aria-label="Тема: светлая">
+      <span id="themeIcon" aria-hidden="true">☀️</span>
       <span class="visually-hidden" id="themeStatus" aria-live="polite"></span>
     </button>
   </header>
@@ -432,7 +432,7 @@
     <section id="gameCard" class="card" aria-live="polite"></section>
   </main>
   <footer>
-    Сделано с заботой об изучающих французский язык. Управление: Enter — ответ, T — тема, R — новая игра (на финальном экране).
+    Сделано с заботой об изучающих французский язык.
   </footer>
   <div id="globalAnnouncer" class="visually-hidden" aria-live="polite"></div>
   <script>
@@ -965,6 +965,7 @@
     // ===================== Состояние темы =====================
     const THEME_KEY = "theme";
     const themeToggle = document.getElementById("themeToggle");
+    const themeIcon = document.getElementById("themeIcon");
     const themeStatus = document.getElementById("themeStatus");
 
     /**
@@ -976,6 +977,9 @@
       if (themeToggle) {
         themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
         themeToggle.setAttribute("aria-label", `Тема: ${theme === "dark" ? "тёмная" : "светлая"}`);
+      }
+      if (themeIcon) {
+        themeIcon.textContent = theme === "dark" ? "🌙" : "☀️";
       }
       if (themeStatus) {
         themeStatus.textContent = theme === "dark" ? "Тёмная тема активна" : "Светлая тема активна";
@@ -1005,21 +1009,6 @@
     }
 
     initTheme();
-
-    // ===================== Слушатели и хоткеи =====================
-    document.addEventListener("keydown", (event) => {
-      if (event.defaultPrevented) return;
-      if (event.key === "t" || event.key === "T") {
-        event.preventDefault();
-        const nextTheme = gameState.theme === "dark" ? "light" : "dark";
-        applyTheme(nextTheme);
-        localStorage.setItem(THEME_KEY, nextTheme);
-      }
-      if ((event.key === "r" || event.key === "R") && gameState.currentRound >= TOTAL_ROUNDS) {
-        event.preventDefault();
-        startGame();
-      }
-    });
 
     // ===================== Старт =====================
     startGame();
