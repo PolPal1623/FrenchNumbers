@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Французские числительные — тренажёр</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f5f5f7;
+      --card-bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --accent: #0066cc;
+      --accent-contrast: #ffffff;
+      --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      --border: rgba(0, 0, 0, 0.08);
+      --badge-correct: #0f9153;
+      --badge-wrong: #d33f49;
+      --input-bg: rgba(255, 255, 255, 0.8);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111114;
+        --card-bg: #1c1c20;
+        --text: #f5f5f7;
+        --muted: #b0b0b5;
+        --accent: #5aa9ff;
+        --accent-contrast: #031328;
+        --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+        --border: rgba(255, 255, 255, 0.12);
+        --badge-correct: #38c682;
+        --badge-wrong: #ff6b73;
+        --input-bg: rgba(28, 28, 32, 0.9);
+      }
+    }
+
+    [data-theme="light"] {
+      --bg: #f5f5f7;
+      --card-bg: #ffffff;
+      --text: #111111;
+      --muted: #555555;
+      --accent: #0066cc;
+      --accent-contrast: #ffffff;
+      --shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      --border: rgba(0, 0, 0, 0.08);
+      --badge-correct: #0f9153;
+      --badge-wrong: #d33f49;
+      --input-bg: rgba(255, 255, 255, 0.8);
+    }
+
+    [data-theme="dark"] {
+      --bg: #111114;
+      --card-bg: #1c1c20;
+      --text: #f5f5f7;
+      --muted: #b0b0b5;
+      --accent: #5aa9ff;
+      --accent-contrast: #031328;
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+      --border: rgba(255, 255, 255, 0.12);
+      --badge-correct: #38c682;
+      --badge-wrong: #ff6b73;
+      --input-bg: rgba(28, 28, 32, 0.9);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 1rem;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .brand h1 {
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 600;
+      margin: 0 0 0.25rem;
+    }
+
+    .brand p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    #themeToggle {
+      align-self: center;
+      border: 1px solid var(--border);
+      background: var(--card-bg);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 0.45rem 0.85rem;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+    }
+
+    #themeToggle:hover {
+      box-shadow: 0 14px 30px rgba(0, 0, 0, 0.12);
+      transform: translateY(-1px);
+    }
+
+    #themeToggle:active {
+      transform: translateY(1px);
+    }
+
+    main {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 0 1rem 3rem;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.5rem, 4vw, 2.75rem);
+      width: min(100%, 720px);
+      margin: clamp(0.5rem, 4vw, 2rem) auto;
+      border: 1px solid var(--border);
+      transition: background 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .round-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .round-count {
+      font-size: 0.95rem;
+      color: var(--muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .round-count strong {
+      color: var(--text);
+    }
+
+    progress {
+      width: 100%;
+      height: 10px;
+      border: none;
+      border-radius: 999px;
+      background-color: rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+    }
+
+    progress::-webkit-progress-bar {
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 999px;
+    }
+
+    progress::-webkit-progress-value {
+      background-color: var(--accent);
+      border-radius: 999px;
+      transition: width 0.4s ease;
+    }
+
+    progress::-moz-progress-bar {
+      background-color: var(--accent);
+      border-radius: 999px;
+    }
+
+    .question-block {
+      margin-bottom: 2rem;
+    }
+
+    .question-label {
+      margin: 0 0 0.75rem;
+      font-size: 1.05rem;
+      color: var(--muted);
+    }
+
+    .question-main {
+      margin: 0;
+      font-size: clamp(2.2rem, 6vw, 3.5rem);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .question-main.fr-text {
+      text-transform: none;
+    }
+
+    .phonetics {
+      margin-top: 1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .phonetics span {
+      padding: 0.3rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.06);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    label {
+      font-weight: 500;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      font-size: 1.2rem;
+      padding: 0.85rem 1rem;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--input-bg);
+      color: var(--text);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    input[type="text"]:focus,
+    input[type="number"]:focus {
+      outline: 3px solid rgba(0, 102, 204, 0.25);
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.15);
+    }
+
+    .hint {
+      margin: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .error-message {
+      color: var(--badge-wrong);
+      font-size: 0.9rem;
+      margin: -0.5rem 0 0;
+    }
+
+    button.primary {
+      align-self: flex-start;
+      padding: 0.85rem 1.8rem;
+      font-size: 1.05rem;
+      border-radius: 999px;
+      border: none;
+      background: var(--accent);
+      color: var(--accent-contrast);
+      cursor: pointer;
+      box-shadow: 0 14px 30px rgba(0, 102, 204, 0.2);
+      transition: transform 0.2s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    button.primary:hover {
+      box-shadow: 0 18px 40px rgba(0, 102, 204, 0.28);
+      transform: translateY(-1px);
+    }
+
+    button.primary:active {
+      transform: translateY(1px);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-bottom: 1rem;
+    }
+
+    .badge.correct {
+      background: rgba(15, 145, 83, 0.12);
+      color: var(--badge-correct);
+    }
+
+    .badge.incorrect {
+      background: rgba(211, 63, 73, 0.12);
+      color: var(--badge-wrong);
+    }
+
+    .result-details {
+      display: grid;
+      gap: 1rem;
+      font-size: 0.95rem;
+      color: var(--muted);
+    }
+
+    .result-details dt {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .result-details dd {
+      margin: 0;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      margin-top: 2rem;
+    }
+
+    button.secondary {
+      padding: 0.8rem 1.4rem;
+      font-size: 1rem;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: background 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button.secondary:hover {
+      background: rgba(0, 0, 0, 0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+
+    thead {
+      background: rgba(0, 0, 0, 0.05);
+    }
+
+    th, td {
+      text-align: left;
+      padding: 0.75rem 0.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 1.5rem;
+    }
+
+    .question-preview {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .status-flag.correct {
+      color: var(--badge-correct);
+      font-weight: 600;
+    }
+
+    .status-flag.incorrect {
+      color: var(--badge-wrong);
+      font-weight: 600;
+    }
+
+    footer {
+      padding: 2rem 1rem 3rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .visually-hidden {
+      position: absolute !important;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      border: 0;
+    }
+
+    @media (min-width: 768px) {
+      .result-details {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="top-bar">
+    <div class="brand">
+      <h1>Французские числительные</h1>
+      <p>тренажёр запоминания и распознавания 1–100</p>
+    </div>
+    <button id="themeToggle" type="button" aria-pressed="false" aria-label="Тема: светлая">
+      <span id="themeIcon" aria-hidden="true">☀️</span>
+      <span class="visually-hidden" id="themeStatus" aria-live="polite"></span>
+    </button>
+  </header>
+  <main>
+    <section id="gameCard" class="card" aria-live="polite"></section>
+  </main>
+  <footer>
+    Сделано с заботой об изучающих французский язык.
+  </footer>
+  <div id="globalAnnouncer" class="visually-hidden" aria-live="polite"></div>
+  <script>
+    // ===================== Данные =====================
+    /**
+     * Полный словарь чисел 1–100: значение, каноническое написание, IPA и русская транскрипция
+     * @type {{value: number, word: string, ipa: string, ruPhon: string}[]}
+     */
+    const numberDictionary = [
+      { value: 1, word: "un", ipa: "/œ̃/", ruPhon: "эн" },
+      { value: 2, word: "deux", ipa: "/dø/", ruPhon: "дё" },
+      { value: 3, word: "trois", ipa: "/tʁwɑ/", ruPhon: "труа" },
+      { value: 4, word: "quatre", ipa: "/katʁ/", ruPhon: "катр" },
+      { value: 5, word: "cinq", ipa: "/sɛ̃k/", ruPhon: "сэнк" },
+      { value: 6, word: "six", ipa: "/sis/", ruPhon: "сис" },
+      { value: 7, word: "sept", ipa: "/sɛt/", ruPhon: "сет" },
+      { value: 8, word: "huit", ipa: "/ɥit/", ruPhon: "юйт" },
+      { value: 9, word: "neuf", ipa: "/nœf/", ruPhon: "нёф" },
+      { value: 10, word: "dix", ipa: "/dis/", ruPhon: "дис" },
+      { value: 11, word: "onze", ipa: "/ɔ̃z/", ruPhon: "онз" },
+      { value: 12, word: "douze", ipa: "/duz/", ruPhon: "дуз" },
+      { value: 13, word: "treize", ipa: "/tʁɛz/", ruPhon: "трэз" },
+      { value: 14, word: "quatorze", ipa: "/ka.tɔʁz/", ruPhon: "каторз" },
+      { value: 15, word: "quinze", ipa: "/kɛ̃z/", ruPhon: "кэнз" },
+      { value: 16, word: "seize", ipa: "/sɛz/", ruPhon: "сэз" },
+      { value: 17, word: "dix-sept", ipa: "/dis.sɛt/", ruPhon: "диссет" },
+      { value: 18, word: "dix-huit", ipa: "/diz.ɥit/", ruPhon: "дизюйт" },
+      { value: 19, word: "dix-neuf", ipa: "/diz.nœf/", ruPhon: "дизнёф" },
+      { value: 20, word: "vingt", ipa: "/vɛ̃/", ruPhon: "вэн" },
+      { value: 21, word: "vingt et un", ipa: "/vɛ̃.te.œ̃/", ruPhon: "вэн-тэ-эн" },
+      { value: 22, word: "vingt-deux", ipa: "/vɛ̃.dø/", ruPhon: "вэн-дё" },
+      { value: 23, word: "vingt-trois", ipa: "/vɛ̃.tʁwɑ/", ruPhon: "вэн-труа" },
+      { value: 24, word: "vingt-quatre", ipa: "/vɛ̃.katʁ/", ruPhon: "вэн-ка́тр" },
+      { value: 25, word: "vingt-cinq", ipa: "/vɛ̃.sɛ̃k/", ruPhon: "вэн-сэнк" },
+      { value: 26, word: "vingt-six", ipa: "/vɛ̃.sis/", ruPhon: "вэн-сис" },
+      { value: 27, word: "vingt-sept", ipa: "/vɛ̃.sɛt/", ruPhon: "вэн-сет" },
+      { value: 28, word: "vingt-huit", ipa: "/vɛ̃.ɥit/", ruPhon: "вэн-юйт" },
+      { value: 29, word: "vingt-neuf", ipa: "/vɛ̃.nœf/", ruPhon: "вэн-нёф" },
+      { value: 30, word: "trente", ipa: "/tʁɑ̃t/", ruPhon: "трант" },
+      { value: 31, word: "trente et un", ipa: "/tʁɑ̃.te.œ̃/", ruPhon: "трант-тэ-эн" },
+      { value: 32, word: "trente-deux", ipa: "/tʁɑ̃.dø/", ruPhon: "тран-дё" },
+      { value: 33, word: "trente-trois", ipa: "/tʁɑ̃.tʁwɑ/", ruPhon: "тран-труа" },
+      { value: 34, word: "trente-quatre", ipa: "/tʁɑ̃.katʁ/", ruPhon: "тран-ка́тр" },
+      { value: 35, word: "trente-cinq", ipa: "/tʁɑ̃.sɛ̃k/", ruPhon: "тран-сэнк" },
+      { value: 36, word: "trente-six", ipa: "/tʁɑ̃.sis/", ruPhon: "тран-сис" },
+      { value: 37, word: "trente-sept", ipa: "/tʁɑ̃.sɛt/", ruPhon: "тран-сет" },
+      { value: 38, word: "trente-huit", ipa: "/tʁɑ̃.ɥit/", ruPhon: "тран-юйт" },
+      { value: 39, word: "trente-neuf", ipa: "/tʁɑ̃.nœf/", ruPhon: "тран-нёф" },
+      { value: 40, word: "quarante", ipa: "/ka.ʁɑ̃t/", ruPhon: "карант" },
+      { value: 41, word: "quarante et un", ipa: "/ka.ʁɑ̃.te.œ̃/", ruPhon: "карант-тэ-эн" },
+      { value: 42, word: "quarante-deux", ipa: "/ka.ʁɑ̃.dø/", ruPhon: "каран-дё" },
+      { value: 43, word: "quarante-trois", ipa: "/ka.ʁɑ̃.tʁwɑ/", ruPhon: "каран-труа" },
+      { value: 44, word: "quarante-quatre", ipa: "/ka.ʁɑ̃.katʁ/", ruPhon: "каран-ка́тр" },
+      { value: 45, word: "quarante-cinq", ipa: "/ka.ʁɑ̃.sɛ̃k/", ruPhon: "каран-сэнк" },
+      { value: 46, word: "quarante-six", ipa: "/ka.ʁɑ̃.sis/", ruPhon: "каран-сис" },
+      { value: 47, word: "quarante-sept", ipa: "/ka.ʁɑ̃.sɛt/", ruPhon: "каран-сет" },
+      { value: 48, word: "quarante-huit", ipa: "/ka.ʁɑ̃.ɥit/", ruPhon: "каран-юйт" },
+      { value: 49, word: "quarante-neuf", ipa: "/ka.ʁɑ̃.nœf/", ruPhon: "каран-нёф" },
+      { value: 50, word: "cinquante", ipa: "/sɛ̃.kɑ̃t/", ruPhon: "сэнкант" },
+      { value: 51, word: "cinquante et un", ipa: "/sɛ̃.kɑ̃.te.œ̃/", ruPhon: "сэнкант-тэ-эн" },
+      { value: 52, word: "cinquante-deux", ipa: "/sɛ̃.kɑ̃.dø/", ruPhon: "сэнкан-дё" },
+      { value: 53, word: "cinquante-trois", ipa: "/sɛ̃.kɑ̃.tʁwɑ/", ruPhon: "сэнкан-труа" },
+      { value: 54, word: "cinquante-quatre", ipa: "/sɛ̃.kɑ̃.katʁ/", ruPhon: "сэнкан-ка́тр" },
+      { value: 55, word: "cinquante-cinq", ipa: "/sɛ̃.kɑ̃.sɛ̃k/", ruPhon: "сэнкан-сэнк" },
+      { value: 56, word: "cinquante-six", ipa: "/sɛ̃.kɑ̃.sis/", ruPhon: "сэнкан-сис" },
+      { value: 57, word: "cinquante-sept", ipa: "/sɛ̃.kɑ̃.sɛt/", ruPhon: "сэнкан-сет" },
+      { value: 58, word: "cinquante-huit", ipa: "/sɛ̃.kɑ̃.ɥit/", ruPhon: "сэнкан-юйт" },
+      { value: 59, word: "cinquante-neuf", ipa: "/sɛ̃.kɑ̃.nœf/", ruPhon: "сэнкан-нёф" },
+      { value: 60, word: "soixante", ipa: "/swa.sɑ̃t/", ruPhon: "суасант" },
+      { value: 61, word: "soixante et un", ipa: "/swa.sɑ̃.te.œ̃/", ruPhon: "суасант-тэ-эн" },
+      { value: 62, word: "soixante-deux", ipa: "/swa.sɑ̃.dø/", ruPhon: "суасан-дё" },
+      { value: 63, word: "soixante-trois", ipa: "/swa.sɑ̃.tʁwɑ/", ruPhon: "суасан-труа" },
+      { value: 64, word: "soixante-quatre", ipa: "/swa.sɑ̃.katʁ/", ruPhon: "суасан-ка́тр" },
+      { value: 65, word: "soixante-cinq", ipa: "/swa.sɑ̃.sɛ̃k/", ruPhon: "суасан-сэнк" },
+      { value: 66, word: "soixante-six", ipa: "/swa.sɑ̃.sis/", ruPhon: "суасан-сис" },
+      { value: 67, word: "soixante-sept", ipa: "/swa.sɑ̃.sɛt/", ruPhon: "суасан-сет" },
+      { value: 68, word: "soixante-huit", ipa: "/swa.sɑ̃.ɥit/", ruPhon: "суасан-юйт" },
+      { value: 69, word: "soixante-neuf", ipa: "/swa.sɑ̃.nœf/", ruPhon: "суасан-нёф" },
+      { value: 70, word: "soixante-dix", ipa: "/swa.sɑ̃.dis/", ruPhon: "суасан-дис" },
+      { value: 71, word: "soixante et onze", ipa: "/swa.sɑ̃.t‿e.ɔ̃z/", ruPhon: "суасант-э-онз" },
+      { value: 72, word: "soixante-douze", ipa: "/swa.sɑ̃.duz/", ruPhon: "суасан-дуз" },
+      { value: 73, word: "soixante-treize", ipa: "/swa.sɑ̃.tʁɛz/", ruPhon: "суасан-трэз" },
+      { value: 74, word: "soixante-quatorze", ipa: "/swa.sɑ̃.ka.tɔʁz/", ruPhon: "суасан-каторз" },
+      { value: 75, word: "soixante-quinze", ipa: "/swa.sɑ̃.kɛ̃z/", ruPhon: "суасан-кэнз" },
+      { value: 76, word: "soixante-seize", ipa: "/swa.sɑ̃.sɛz/", ruPhon: "суасан-сэз" },
+      { value: 77, word: "soixante-dix-sept", ipa: "/swa.sɑ̃.dis.sɛt/", ruPhon: "суасан-диссет" },
+      { value: 78, word: "soixante-dix-huit", ipa: "/swa.sɑ̃.diz.ɥit/", ruPhon: "суасан-дизюйт" },
+      { value: 79, word: "soixante-dix-neuf", ipa: "/swa.sɑ̃.diz.nœf/", ruPhon: "суасан-дизнёф" },
+      { value: 80, word: "quatre-vingts", ipa: "/katʁə.vɛ̃/", ruPhon: "катр-вэн" },
+      { value: 81, word: "quatre-vingt-un", ipa: "/katʁə.vɛ̃.tœ̃/", ruPhon: "катр-вэн-тэн" },
+      { value: 82, word: "quatre-vingt-deux", ipa: "/katʁə.vɛ̃.dø/", ruPhon: "катр-вэн-дё" },
+      { value: 83, word: "quatre-vingt-trois", ipa: "/katʁə.vɛ̃.tʁwɑ/", ruPhon: "катр-вэн-труа" },
+      { value: 84, word: "quatre-vingt-quatre", ipa: "/katʁə.vɛ̃.katʁ/", ruPhon: "катр-вэн-ка́тр" },
+      { value: 85, word: "quatre-vingt-cinq", ipa: "/katʁə.vɛ̃.sɛ̃k/", ruPhon: "катр-вэн-сэнк" },
+      { value: 86, word: "quatre-vingt-six", ipa: "/katʁə.vɛ̃.sis/", ruPhon: "катр-вэн-сис" },
+      { value: 87, word: "quatre-vingt-sept", ipa: "/katʁə.vɛ̃.sɛt/", ruPhon: "катр-вэн-сет" },
+      { value: 88, word: "quatre-vingt-huit", ipa: "/katʁə.vɛ̃.ɥit/", ruPhon: "катр-вэн-юйт" },
+      { value: 89, word: "quatre-vingt-neuf", ipa: "/katʁə.vɛ̃.nœf/", ruPhon: "катр-вэн-нёф" },
+      { value: 90, word: "quatre-vingt-dix", ipa: "/katʁə.vɛ̃.dis/", ruPhon: "катр-вэн-дис" },
+      { value: 91, word: "quatre-vingt-onze", ipa: "/katʁə.vɛ̃.t‿ɔ̃z/", ruPhon: "катр-вэн-онз" },
+      { value: 92, word: "quatre-vingt-douze", ipa: "/katʁə.vɛ̃.duz/", ruPhon: "катр-вэн-дуз" },
+      { value: 93, word: "quatre-vingt-treize", ipa: "/katʁə.vɛ̃.tʁɛz/", ruPhon: "катр-вэн-трэз" },
+      { value: 94, word: "quatre-vingt-quatorze", ipa: "/katʁə.vɛ̃.ka.tɔʁz/", ruPhon: "катр-вэн-каторз" },
+      { value: 95, word: "quatre-vingt-quinze", ipa: "/katʁə.vɛ̃.kɛ̃z/", ruPhon: "катр-вэн-кэнз" },
+      { value: 96, word: "quatre-vingt-seize", ipa: "/katʁə.vɛ̃.sɛz/", ruPhon: "катр-вэн-сэз" },
+      { value: 97, word: "quatre-vingt-dix-sept", ipa: "/katʁə.vɛ̃.dis.sɛt/", ruPhon: "катр-вэн-диссет" },
+      { value: 98, word: "quatre-vingt-dix-huit", ipa: "/katʁə.vɛ̃.diz.ɥit/", ruPhon: "катр-вэн-дизюйт" },
+      { value: 99, word: "quatre-vingt-dix-neuf", ipa: "/katʁə.vɛ̃.diz.nœf/", ruPhon: "катр-вэн-дизнёф" },
+      { value: 100, word: "cent", ipa: "/sɑ̃/", ruPhon: "сан" }
+    ];
+
+    // ===================== Утилиты =====================
+    /**
+     * Удаляет диакритики, дефисы, пробелы и апострофы из строки
+     * @param {string} text
+     * @returns {string}
+     */
+    function normalizeFrench(text) {
+      return text
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/\p{Diacritic}/gu, "")
+        .replace(/[’'`´]/g, "")
+        .replace(/-/g, "")
+        .replace(/\s+/g, "")
+        .replace(/œ/g, "oe")
+        .replace(/æ/g, "ae");
+    }
+
+    /**
+     * Перемешивает массив (Фишер — Йетс)
+     * @template T
+     * @param {T[]} array
+     * @returns {T[]}
+     */
+    function shuffle(array) {
+      const copy = array.slice();
+      for (let i = copy.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
+    /**
+     * Форматирует продолжительность в виде «Xm Ys»
+     * @param {number} milliseconds
+     * @returns {string}
+     */
+    function formatDuration(milliseconds) {
+      const totalSeconds = Math.round(milliseconds / 1000);
+      const minutes = Math.floor(totalSeconds / 60);
+      const seconds = totalSeconds % 60;
+      const parts = [];
+      if (minutes > 0) {
+        parts.push(`${minutes}м`);
+      }
+      parts.push(`${seconds}с`);
+      return parts.join(" ");
+    }
+
+    /**
+     * Копирует текст в буфер обмена, возвращает true/false в зависимости от успеха
+     * @param {string} text
+     * @returns {Promise<boolean>}
+     */
+    async function copyToClipboard(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (error) {
+        console.error("Clipboard error", error);
+        return false;
+      }
+    }
+
+    /**
+     * Нормализует ответ пользователя в режиме французского ввода и проверяет корректность
+     * @param {{value: number, word: string}} entry
+     * @param {string} userInput
+     * @returns {boolean}
+     */
+    function isFrenchAnswerCorrect(entry, userInput) {
+      const normalizedCanonical = normalizeFrench(entry.word);
+      const normalizedInput = normalizeFrench(userInput);
+
+      if (entry.value === 80) {
+        const withoutS = normalizedCanonical.endsWith("s")
+          ? normalizedCanonical.slice(0, -1)
+          : normalizedCanonical;
+        return normalizedInput === normalizedCanonical || normalizedInput === withoutS;
+      }
+
+      if (entry.value === 71) {
+        const alt = normalizeFrench("soixante-et-onze");
+        return normalizedInput === normalizedCanonical || normalizedInput === alt;
+      }
+
+      return normalizedInput === normalizedCanonical;
+    }
+
+    // ===================== Логика игры =====================
+    const TOTAL_ROUNDS = 8;
+
+    /**
+     * @typedef {Object} Question
+     * @property {"toFr"|"toNumber"} mode
+     * @property {{value: number, word: string, ipa: string, ruPhon: string}} entry
+     */
+
+    /**
+     * Генерирует набор вопросов для новой игры
+     * @returns {Question[]}
+     */
+    function generateQuestions() {
+      const pool = shuffle(numberDictionary);
+      const selected = pool.slice(0, TOTAL_ROUNDS);
+      return selected.map((entry) => ({
+        entry,
+        mode: Math.random() > 0.5 ? "toFr" : "toNumber"
+      }));
+    }
+
+    const gameState = {
+      questions: [],
+      rounds: [],
+      currentRound: 0,
+      currentQuestionStart: 0,
+      totalTime: 0,
+      gameStartedAt: 0,
+      theme: "auto"
+    };
+
+    /**
+     * Запускает новую игру
+     */
+    function startGame() {
+      gameState.questions = generateQuestions();
+      gameState.rounds = [];
+      gameState.currentRound = 0;
+      gameState.totalTime = 0;
+      gameState.gameStartedAt = performance.now();
+      renderQuestion();
+    }
+
+    /**
+     * Обрабатывает отправку ответа
+     * @param {SubmitEvent} event
+     */
+    function handleAnswer(event) {
+      event.preventDefault();
+      const form = /** @type {HTMLFormElement} */ (event.target);
+      const input = /** @type {HTMLInputElement} */ (form.querySelector("[name='answer']"));
+      const errorEl = form.querySelector(".error-message");
+
+      if (errorEl) {
+        errorEl.textContent = "";
+      }
+
+      const question = gameState.questions[gameState.currentRound];
+      const userAnswerRaw = input.value;
+
+      if (question.mode === "toNumber") {
+        const trimmed = userAnswerRaw.trim();
+        if (!trimmed) {
+          if (errorEl) {
+            errorEl.textContent = "Введите число арабскими цифрами.";
+          }
+          input.focus();
+          return;
+        }
+        if (!/^\d+$/.test(trimmed)) {
+          if (errorEl) {
+            errorEl.textContent = "Допустимы только цифры.";
+          }
+          input.focus();
+          return;
+        }
+      } else {
+        if (!userAnswerRaw.trim()) {
+          if (errorEl) {
+            errorEl.textContent = "Напишите вариант по-французски.";
+          }
+          input.focus();
+          return;
+        }
+      }
+
+      const endTime = performance.now();
+      const duration = endTime - gameState.currentQuestionStart;
+      gameState.totalTime += duration;
+
+      let isCorrect = false;
+      let correctAnswer = "";
+
+      if (question.mode === "toFr") {
+        isCorrect = isFrenchAnswerCorrect(question.entry, userAnswerRaw);
+        correctAnswer = question.entry.word;
+      } else {
+        const numericAnswer = Number(userAnswerRaw.trim());
+        isCorrect = numericAnswer === question.entry.value;
+        correctAnswer = String(question.entry.value);
+      }
+
+      const roundResult = {
+        index: gameState.currentRound + 1,
+        question,
+        userAnswer: userAnswerRaw,
+        correctAnswer,
+        isCorrect,
+        timeSpent: duration
+      };
+
+      gameState.rounds.push(roundResult);
+      gameState.currentRound += 1;
+
+      if (gameState.currentRound >= TOTAL_ROUNDS) {
+        renderRoundResult(roundResult, true);
+      } else {
+        renderRoundResult(roundResult, false);
+      }
+    }
+
+    /**
+     * Переход к следующему шагу после просмотра результата раунда
+     */
+    function proceedAfterResult() {
+      if (gameState.currentRound >= TOTAL_ROUNDS) {
+        renderSummary();
+      } else {
+        renderQuestion();
+      }
+    }
+
+    // ===================== Рендеринг =====================
+    const gameCard = document.getElementById("gameCard");
+    const globalAnnouncer = document.getElementById("globalAnnouncer");
+
+    /**
+     * Отрисовывает карточку вопроса
+     */
+    function renderQuestion() {
+      const question = gameState.questions[gameState.currentRound];
+      const roundNumber = gameState.currentRound + 1;
+      const progressValue = gameState.currentRound;
+      const progressLabelId = "progressLabel";
+
+      gameCard.innerHTML = `
+        <div class="round-meta">
+          <div class="round-count">
+            <span id="${progressLabelId}">Раунд <strong>${roundNumber}</strong> из ${TOTAL_ROUNDS}</span>
+            <span>${roundNumber}/${TOTAL_ROUNDS}</span>
+          </div>
+          <progress value="${progressValue}" max="${TOTAL_ROUNDS}" aria-describedby="${progressLabelId}"></progress>
+        </div>
+        <div class="question-block">
+          ${question.mode === "toFr" ? `
+            <p class="question-label">Запишите по-французски:</p>
+            <p class="question-main">${question.entry.value}</p>
+          ` : `
+            <p class="question-label">Напишите цифрами:</p>
+            <p class="question-main fr-text">${question.entry.word}</p>
+            <div class="phonetics">
+              <span aria-label="МФА">${question.entry.ipa}</span>
+              <span aria-label="Русская передача">${question.entry.ruPhon}</span>
+            </div>
+          `}
+        </div>
+        <form id="answerForm">
+          <label for="answerInput">Ваш ответ</label>
+          <input id="answerInput" name="answer" type="text" autocomplete="off" spellcheck="false" inputmode="${question.mode === "toNumber" ? "numeric" : "latin"}" aria-describedby="hintText errorText">
+          <p id="hintText" class="hint">${question.mode === "toFr" ? "Разрешены буквы, дефисы, пробелы, апострофы и акценты — проверка лояльна." : "Используйте арабские цифры (например, 73)."}</p>
+          <p id="errorText" class="error-message" role="alert"></p>
+          <button type="submit" class="primary">Ответить</button>
+        </form>
+      `;
+
+      const form = document.getElementById("answerForm");
+      form.addEventListener("submit", handleAnswer);
+      const input = document.getElementById("answerInput");
+      input.focus();
+      gameState.currentQuestionStart = performance.now();
+    }
+
+    /**
+     * Отрисовывает результат раунда
+     * @param {{index: number, question: Question, userAnswer: string, correctAnswer: string, isCorrect: boolean, timeSpent: number}} result
+     * @param {boolean} isFinalStep
+     */
+    function renderRoundResult(result, isFinalStep) {
+      const { question } = result;
+      const ipaBlock = `<span aria-label="МФА">${question.entry.ipa}</span>`;
+      const ruBlock = `<span aria-label="Русская передача">${question.entry.ruPhon}</span>`;
+      const timeSpent = formatDuration(result.timeSpent);
+
+      const answerSection = question.mode === "toFr"
+        ? `<dd>${question.entry.word}</dd>`
+        : `<dd>${question.entry.value}</dd>`;
+
+      const questionDescription = question.mode === "toFr"
+        ? `${question.entry.value}`
+        : `${question.entry.word}`;
+
+      gameCard.innerHTML = `
+        <span class="badge ${result.isCorrect ? "correct" : "incorrect"}">
+          ${result.isCorrect ? "Верно" : "Неверно"}
+        </span>
+        <div class="question-block">
+          <p class="question-label">Вопрос ${result.index} из ${TOTAL_ROUNDS}</p>
+          <p class="question-main fr-text">${questionDescription}</p>
+          <div class="phonetics">
+            ${ipaBlock}
+            ${ruBlock}
+          </div>
+        </div>
+        <dl class="result-details">
+          <div>
+            <dt>Ваш ответ</dt>
+            <dd>${result.userAnswer ? result.userAnswer : "—"}</dd>
+          </div>
+          <div>
+            <dt>Правильный ответ</dt>
+            ${answerSection}
+          </div>
+          <div>
+            <dt>Время ответа</dt>
+            <dd>${timeSpent}</dd>
+          </div>
+        </dl>
+        <div class="actions">
+          <button type="button" class="primary" id="nextButton">${isFinalStep ? "К итогам" : "Дальше"}</button>
+        </div>
+      `;
+
+      const nextButton = document.getElementById("nextButton");
+      nextButton.addEventListener("click", proceedAfterResult);
+      nextButton.focus();
+    }
+
+    /**
+     * Отрисовывает финальный экран со статистикой
+     */
+    function renderSummary() {
+      const correctCount = gameState.rounds.filter((round) => round.isCorrect).length;
+      const averageTime = gameState.rounds.length ? gameState.totalTime / gameState.rounds.length : 0;
+      const averageTimeFormatted = formatDuration(averageTime);
+      const totalTimeFormatted = formatDuration(gameState.totalTime);
+
+      const rowsHtml = gameState.rounds.map((round) => {
+        const question = round.question;
+        const questionText = question.mode === "toFr"
+          ? `${question.entry.value} → ${question.entry.word}`
+          : `${question.entry.word} → ${question.entry.value}`;
+        const phoneticsHtml = `
+          <div class="phonetics">
+            <span>${question.entry.ipa}</span>
+            <span>${question.entry.ruPhon}</span>
+          </div>
+        `;
+        return `
+          <tr>
+            <td>${round.index}</td>
+            <td>
+              <div class="question-preview">
+                <span>${questionText}</span>
+                ${phoneticsHtml}
+              </div>
+            </td>
+            <td>${round.userAnswer ? round.userAnswer : "—"}</td>
+            <td>${round.correctAnswer}</td>
+            <td class="status-flag ${round.isCorrect ? "correct" : "incorrect"}">${round.isCorrect ? "✔" : "✖"}</td>
+          </tr>
+        `;
+      }).join("");
+
+      gameCard.innerHTML = `
+        <div class="round-meta">
+          <h2 style="margin: 0; font-size: clamp(1.6rem, 3vw, 2.2rem);">Итоги игры</h2>
+          <p class="hint" style="font-size: 1rem;">Вы ответили правильно на <strong>${correctCount}</strong> из ${TOTAL_ROUNDS}. Среднее время ответа — ${averageTimeFormatted}.</p>
+        </div>
+        <dl class="result-details" style="margin-bottom: 1.5rem;">
+          <div>
+            <dt>Всего правильных</dt>
+            <dd>${correctCount}/${TOTAL_ROUNDS}</dd>
+          </div>
+          <div>
+            <dt>Среднее время</dt>
+            <dd>${averageTimeFormatted}</dd>
+          </div>
+          <div>
+            <dt>Общее время</dt>
+            <dd>${totalTimeFormatted}</dd>
+          </div>
+        </dl>
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">№</th>
+                <th scope="col">Вопрос</th>
+                <th scope="col">Ответ</th>
+                <th scope="col">Правильно</th>
+                <th scope="col">Статус</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${rowsHtml}
+            </tbody>
+          </table>
+        </div>
+        <div class="actions">
+          <button type="button" class="primary" id="playAgain">Сыграть ещё</button>
+          <button type="button" class="secondary" id="shareResult">Скопировать результат</button>
+        </div>
+      `;
+
+      document.getElementById("playAgain").addEventListener("click", () => {
+        startGame();
+      });
+
+      document.getElementById("shareResult").addEventListener("click", async () => {
+        const text = `Результат: ${correctCount}/${TOTAL_ROUNDS} за ${totalTimeFormatted}`;
+        const success = await copyToClipboard(text);
+        if (globalAnnouncer) {
+          globalAnnouncer.textContent = success ? "Результат скопирован." : "Не удалось скопировать результат.";
+        }
+      });
+    }
+
+    // ===================== Состояние темы =====================
+    const THEME_KEY = "theme";
+    const themeToggle = document.getElementById("themeToggle");
+    const themeIcon = document.getElementById("themeIcon");
+    const themeStatus = document.getElementById("themeStatus");
+
+    /**
+     * Применяет визуальную тему
+     * @param {"light"|"dark"} theme
+     */
+    function applyTheme(theme) {
+      document.documentElement.setAttribute("data-theme", theme);
+      if (themeToggle) {
+        themeToggle.setAttribute("aria-pressed", theme === "dark" ? "true" : "false");
+        themeToggle.setAttribute("aria-label", `Тема: ${theme === "dark" ? "тёмная" : "светлая"}`);
+      }
+      if (themeIcon) {
+        themeIcon.textContent = theme === "dark" ? "🌙" : "☀️";
+      }
+      if (themeStatus) {
+        themeStatus.textContent = theme === "dark" ? "Тёмная тема активна" : "Светлая тема активна";
+      }
+      gameState.theme = theme;
+    }
+
+    /**
+     * Инициализирует тему при загрузке
+     */
+    function initTheme() {
+      const stored = localStorage.getItem(THEME_KEY);
+      if (stored === "light" || stored === "dark") {
+        applyTheme(stored);
+        return;
+      }
+      const prefersDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      applyTheme(prefersDark ? "dark" : "light");
+    }
+
+    if (themeToggle) {
+      themeToggle.addEventListener("click", () => {
+        const nextTheme = gameState.theme === "dark" ? "light" : "dark";
+        applyTheme(nextTheme);
+        localStorage.setItem(THEME_KEY, nextTheme);
+      });
+    }
+
+    initTheme();
+
+    // ===================== Старт =====================
+    startGame();
+  </script>
+</body>
+</html>
