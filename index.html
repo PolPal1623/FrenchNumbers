@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Французские числительные — тренажёр</title>
+  <title>French Learning Suite · Числительные</title>
   <style>
     :root {
       color-scheme: light dark;
@@ -80,6 +80,10 @@
     body {
       display: flex;
       flex-direction: column;
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.14), transparent 28%),
+        radial-gradient(circle at top right, rgba(249, 115, 22, 0.12), transparent 20%),
+        var(--bg);
     }
 
     .top-bar {
@@ -102,6 +106,64 @@
       margin: 0;
       color: var(--muted);
       font-size: 0.95rem;
+    }
+
+    .suite-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      width: min(100%, 960px);
+      margin: 0 auto;
+      padding: 1.25rem clamp(1rem, 4vw, 2.5rem) 0;
+    }
+
+    .suite-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .suite-badge::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb, #f97316);
+      box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.12);
+    }
+
+    .suite-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+    }
+
+    .suite-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0.55rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      background: var(--card-bg);
+      color: var(--text);
+      text-decoration: none;
+      transition: background 0.2s ease, transform 0.2s ease, color 0.2s ease;
+    }
+
+    .suite-link:hover,
+    .suite-link:focus-visible {
+      background: var(--accent);
+      color: var(--accent-contrast);
+      outline: none;
+      transform: translateY(-1px);
     }
 
     #themeToggle {
@@ -418,10 +480,17 @@
   </style>
 </head>
 <body>
+  <div class="suite-bar">
+    <a class="suite-badge" href="https://polpal1623.github.io/FrenchLibrary/">French Learning Suite</a>
+    <div class="suite-actions">
+      <a class="suite-link" href="https://polpal1623.github.io/FrenchLibrary/">Все приложения</a>
+      <a class="suite-link" href="https://github.com/PolPal1623/FrenchNumbers">GitHub</a>
+    </div>
+  </div>
   <header class="top-bar">
     <div class="brand">
       <h1>Французские числительные</h1>
-      <p>тренажёр запоминания и распознавания 1–100</p>
+      <p>8 раундов на числа 1-100: распознавание, письмо и быстрая самопроверка.</p>
     </div>
     <button id="themeToggle" type="button" aria-pressed="false" aria-label="Тема: светлая">
       <span id="themeIcon" aria-hidden="true">☀️</span>
@@ -432,7 +501,7 @@
     <section id="gameCard" class="card" aria-live="polite"></section>
   </main>
   <footer>
-    Сделано с заботой об изучающих французский язык.
+    French Learning Suite · Числа 1-100 с поддержкой орфографии и IPA
   </footer>
   <div id="globalAnnouncer" class="visually-hidden" aria-live="polite"></div>
   <script>
